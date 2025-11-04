@@ -1,0 +1,1755 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Mindset - Centre de Formation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Reset et variables */
+        :root {
+            --primary: #3498db;
+            --primary-dark: #2980b9;
+            --secondary: #2c3e50;
+            --secondary-light: #34495e;
+            --accent: #e74c3c;
+            --accent-light: #e67e22;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --success: #2ecc71;
+            --warning: #f39c12;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 20px rgba(0, 0, 0, 0.15);
+            --transition: all 0.3s ease;
+            --radius: 8px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            line-height: 1.6;
+            color: #333;
+            overflow-x: hidden;
+            background-color: #f9f9f9;
+        }
+
+        /* Pages */
+        .page {
+            display: none;
+            min-height: 100vh;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        /* Header et Navigation Principale */
+        .main-header {
+            background: rgba(44, 62, 80, 0.95);
+            color: white;
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+        }
+
+        .header-scrolled {
+            padding: 0.5rem 0;
+            background: rgba(44, 62, 80, 0.98);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+        }
+
+        .logo-image {
+            height: 45px;
+            width: auto;
+            transition: var(--transition);
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .logo-text span {
+            color: var(--primary);
+        }
+
+        .main-nav {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .main-nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            padding: 0.5rem 0;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .main-nav a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--primary);
+            transition: var(--transition);
+        }
+
+        .main-nav a:hover:after, .main-nav a.active:after {
+            width: 100%;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.7rem 1.5rem;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+            border: none;
+            font-size: 0.95rem;
+        }
+
+        .btn-outline {
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            background: transparent;
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            border: 2px solid var(--primary);
+        }
+
+        .btn-primary:hover {
+            background: transparent;
+            color: var(--primary);
+        }
+
+        .btn-accent {
+            background: var(--accent);
+            color: white;
+            border: 2px solid var(--accent);
+        }
+
+        .btn-accent:hover {
+            background: transparent;
+            color: var(--accent);
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: white;
+            border: 2px solid var(--success);
+        }
+
+        .btn-success:hover {
+            background: transparent;
+            color: var(--success);
+        }
+
+        .btn-danger {
+            background: var(--accent);
+            color: white;
+            border: 2px solid var(--accent);
+        }
+
+        .btn-danger:hover {
+            background: transparent;
+            color: var(--accent);
+        }
+
+        .btn-sm {
+            padding: 0.3rem 0.7rem;
+            font-size: 0.8rem;
+        }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+        }
+
+        /* Page d'Accueil */
+        .hero {
+            position: relative;
+            height: 100vh;
+            color: white;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 70px;
+            overflow: hidden;
+        }
+
+        .slideshow {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out;
+        }
+
+        .slide.active {
+            opacity: 1;
+        }
+
+        .slide-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+        }
+
+        .hero-content {
+            max-width: 900px;
+            padding: 0 2rem;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3.2rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .innovation-text {
+            background: rgba(52, 152, 219, 0.2);
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 2rem 0;
+            border-left: 4px solid var(--primary);
+            text-align: left;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+
+        /* Sections communes */
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--secondary);
+            margin-bottom: 1rem;
+        }
+
+        .section-title p {
+            color: #666;
+            max-width: 700px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+        }
+
+        .why-us, .stats, .departments, .gallery, .form-section {
+            padding: 5rem 2rem;
+        }
+
+        .why-us, .form-section {
+            background: white;
+        }
+
+        .departments {
+            background: var(--light);
+        }
+
+        .stats {
+            background: linear-gradient(135deg, var(--secondary) 0%, var(--secondary-light) 100%);
+            color: white;
+        }
+
+        /* Pourquoi Nous Choisir */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            background: white;
+            border-radius: var(--radius);
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border-top: 4px solid var(--primary);
+            text-align: center;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-card h3 {
+            margin-bottom: 1rem;
+            color: var(--secondary);
+        }
+
+        /* Statistiques */
+        .stats-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 1.5rem;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        .stat-item p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .stats-table-container {
+            max-width: 1000px;
+            margin: 3rem auto 0;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .stats-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .stats-table th {
+            background: rgba(52, 152, 219, 0.3);
+            padding: 1.2rem 1rem;
+            text-align: left;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .stats-table td {
+            padding: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .stats-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .stats-table tr:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .stat-value {
+            font-weight: bold;
+            color: var(--primary);
+            font-size: 1.2rem;
+        }
+
+        /* Départements */
+        .tabs {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .tab {
+            padding: 0.8rem 1.5rem;
+            background: white;
+            border: none;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+        }
+
+        .tab.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .tab-content {
+            display: none;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .department-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .department-card {
+            background: white;
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .department-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .department-img {
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .department-content {
+            padding: 1.5rem;
+        }
+
+        .department-content h3 {
+            margin-bottom: 1rem;
+            color: var(--secondary);
+        }
+
+        .department-list {
+            list-style: none;
+            margin-bottom: 1.5rem;
+        }
+
+        .department-list li {
+            margin-bottom: 0.5rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .department-list li:before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--success);
+            font-weight: bold;
+        }
+
+        /* Galerie */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .gallery-item {
+            border-radius: var(--radius);
+            overflow: hidden;
+            height: 250px;
+            position: relative;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.03);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .gallery-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Formulaire */
+        .form-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--light);
+            padding: 3rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+        }
+
+        .form-row {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group {
+            flex: 1;
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--secondary);
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 4rem 2rem 2rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-column h3 {
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .footer-column h3:after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 2px;
+            background: var(--primary);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: #ccc;
+            text-decoration: none;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+            padding-left: 5px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            background: var(--primary);
+            transform: translateY(-5px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Page Administration */
+        .admin-header {
+            background: var(--secondary);
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--shadow);
+        }
+
+        .admin-nav {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .admin-nav a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .admin-nav a:hover, .admin-nav a.active {
+            background: var(--primary);
+        }
+
+        .admin-container {
+            display: flex;
+            min-height: calc(100vh - 70px);
+        }
+
+        .admin-sidebar {
+            width: 250px;
+            background: white;
+            padding: 2rem 1rem;
+            box-shadow: var(--shadow);
+        }
+
+        .sidebar-menu {
+            list-style: none;
+        }
+
+        .sidebar-menu li {
+            margin-bottom: 0.5rem;
+        }
+
+        .sidebar-menu a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 0.8rem 1rem;
+            color: var(--secondary);
+            text-decoration: none;
+            border-radius: 5px;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .sidebar-menu a:hover, .sidebar-menu a.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .admin-main {
+            flex: 1;
+            padding: 2rem;
+            background: #f5f7fa;
+        }
+
+        .dashboard-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            border-left: 4px solid var(--primary);
+        }
+
+        .card h3 {
+            color: var(--secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .card-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .table-container {
+            background: white;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            margin-bottom: 2rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        th {
+            background: var(--light);
+            font-weight: 600;
+            color: var(--secondary);
+        }
+
+        tr:hover {
+            background: #f9f9f9;
+        }
+
+        /* Login */
+        .login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 100%);
+            padding: 2rem;
+        }
+
+        .login-box {
+            background: white;
+            padding: 3rem;
+            border-radius: 10px;
+            box-shadow: var(--shadow-lg);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .login-box h2 {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--secondary);
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            
+            .stats-table-container {
+                overflow-x: auto;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hamburger {
+                display: block;
+            }
+
+            .main-nav {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: var(--secondary);
+                padding: 1rem 0;
+                box-shadow: var(--shadow);
+            }
+
+            .main-nav.active {
+                display: flex;
+            }
+
+            .nav-buttons {
+                display: none;
+            }
+
+            .hero {
+                height: 80vh;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn {
+                width: 100%;
+                max-width: 250px;
+            }
+
+            .form-container {
+                padding: 2rem;
+            }
+            
+            .tabs {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .tab {
+                width: 100%;
+                max-width: 300px;
+            }
+            
+            .stats-table th, 
+            .stats-table td {
+                padding: 0.8rem 0.5rem;
+                font-size: 0.9rem;
+            }
+            
+            .stat-value {
+                font-size: 1rem;
+            }
+
+            .admin-container {
+                flex-direction: column;
+            }
+            
+            .admin-sidebar {
+                width: 100%;
+            }
+            
+            .admin-nav {
+                display: none;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .nav-container {
+                padding: 0 1rem;
+            }
+
+            .hero {
+                padding: 0 1rem;
+                height: 70vh;
+            }
+
+            .why-us, .stats, .departments, .gallery, .form-section {
+                padding: 3rem 1rem;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+            
+            .stat-number {
+                font-size: 2.5rem;
+            }
+            
+            .stats-table th, 
+            .stats-table td {
+                padding: 0.6rem 0.3rem;
+                font-size: 0.8rem;
+            }
+            
+            .login-box {
+                padding: 2rem 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Principal -->
+    <header class="main-header" id="header">
+        <nav class="nav-container">
+            <div class="logo" onclick="showPage('accueil')">
+                <img src="logo-mindset.png" alt="The Mindset" class="logo-image">
+                <div class="logo-text">The <span>Mindset</span></div>
+            </div>
+            <ul class="main-nav">
+                <li><a class="nav-link active" onclick="showPage('accueil')">Accueil</a></li>
+                <li><a class="nav-link" onclick="showPage('pourquoi')">Pourquoi nous</a></li>
+                <li><a class="nav-link" onclick="showPage('stats')">Statistiques</a></li>
+                <li><a class="nav-link" onclick="showPage('departements')">Départements</a></li>
+                <li><a class="nav-link" onclick="showPage('galerie')">Galerie</a></li>
+                <li><a class="nav-link" onclick="showPage('contact')">Contact</a></li>
+                <li><a class="nav-link" onclick="showPage('admin-login')">Administration</a></li>
+            </ul>
+            <div class="nav-buttons">
+                <a class="btn btn-outline" onclick="downloadFlyer()">Télécharger le flyer</a>
+                <a class="btn btn-primary" onclick="showPage('contact')">Contactez-nous</a>
+            </div>
+            <div class="hamburger">☰</div>
+        </nav>
+    </header>
+
+    <!-- Page d'Accueil -->
+    <section id="accueil" class="page active">
+        <div class="hero">
+            <div class="slideshow">
+                <div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80')"></div>
+                <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80')"></div>
+                <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80')"></div>
+                <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1559136555-9303baea8ebd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80')"></div>
+                <div class="slide-overlay"></div>
+            </div>
+            
+            <div class="hero-content">
+                <h1>Formez-vous aux métiers de demain</h1>
+                <p>Développez vos compétences avec The Mindset, le centre de formation qui vous prépare aux défis du numérique</p>
+                
+                <div class="innovation-text">
+                    <p>"À l'ère du numérique, l'innovation n'est plus une option mais une nécessité. Chez The Mindset, nous formons les esprits curieux et créatifs qui façonneront le monde de demain grâce à une pédagogie innovante, des formateurs experts et un réseau de partenaires solides."</p>
+                </div>
+                
+                <div class="hero-buttons">
+                    <a class="btn btn-primary" onclick="showPage('departements')">Découvrir nos formations</a>
+                    <a class="btn btn-accent" onclick="showPage('contact')">Demander un conseil</a>
+                    <a class="btn btn-outline" onclick="downloadFlyer()">Télécharger le programme</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sections intégrées à la page d'accueil -->
+        <section class="why-us" id="pourquoi-section">
+            <div class="section-title">
+                <h2>Pourquoi choisir The Mindset ?</h2>
+                <p>Découvrez les atouts qui font de nous le partenaire de formation privilégié des professionnels</p>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-user-tie"></i>
+                    </div>
+                    <h3>Insertion professionnelle</h3>
+                    <p>95% de nos apprenants trouvent un emploi dans les 6 mois suivant leur formation grâce à notre réseau d'entreprises partenaires.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <h3>Partenariats solides</h3>
+                    <p>Nous collaborons avec plus de 200 entreprises leaders dans leurs secteurs pour des formations adaptées au marché.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Vision stratégique</h3>
+                    <p>Notre comité pédagogique anticipe les évolutions du marché pour vous former aux compétences de demain.</p>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>The Mindset</h3>
+                    <p>Centre de formation innovant préparant aux métiers du numérique. Nous croyons en l'apprentissage continu et l'adaptation aux nouvelles technologies.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Liens rapides</h3>
+                    <ul class="footer-links">
+                        <li><a onclick="showPage('accueil')">Accueil</a></li>
+                        <li><a onclick="showPage('pourquoi')">Pourquoi nous</a></li>
+                        <li><a onclick="showPage('stats')">Statistiques</a></li>
+                        <li><a onclick="showPage('departements')">Départements</a></li>
+                        <li><a onclick="showPage('galerie')">Galerie</a></li>
+                        <li><a onclick="showPage('contact')">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Nos formations</h3>
+                    <ul class="footer-links">
+                        <li><a onclick="showPage('departements')">Développement Web</a></li>
+                        <li><a onclick="showPage('departements')">Data Science</a></li>
+                        <li><a onclick="showPage('departements')">Cybersécurité</a></li>
+                        <li><a onclick="showPage('departements')">Cloud Computing</a></li>
+                        <li><a onclick="showPage('departements')">Marketing Digital</a></li>
+                        <li><a onclick="showPage('departements')">Management de Projet</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Contact</h3>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Avenue de l'Innovation, 75000 Foumban</li>
+                        <li><i class="fas fa-phone"></i> +237 656 18 03 96</li>
+                        <li><i class="fas fa-envelope"></i> macdonald7601@gmail.com</li>
+                        <li><i class="fas fa-clock"></i> Lun - Ven: 9h00 - 18h00</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2023 The Mindset - Tous droits réservés | <a href="#" style="color: var(--primary);">Mentions légales</a> | <a href="#" style="color: var(--primary);">Politique de confidentialité</a> | <a href="#" style="color: var(--primary);">Conditions générales</a></p>
+            </div>
+        </footer>
+    </section>
+
+    <!-- Page Pourquoi Nous -->
+    <section id="pourquoi" class="page">
+        <div class="why-us" style="margin-top: 70px;">
+            <div class="section-title">
+                <h2>Pourquoi choisir The Mindset ?</h2>
+                <p>Découvrez les atouts qui font de nous le partenaire de formation privilégié des professionnels</p>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-user-tie"></i>
+                    </div>
+                    <h3>Insertion professionnelle</h3>
+                    <p>95% de nos apprenants trouvent un emploi dans les 6 mois suivant leur formation grâce à notre réseau d'entreprises partenaires.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <h3>Partenariats solides</h3>
+                    <p>Nous collaborons avec plus de 200 entreprises leaders dans leurs secteurs pour des formations adaptées au marché.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Vision stratégique</h3>
+                    <p>Notre comité pédagogique anticipe les évolutions du marché pour vous former aux compétences de demain.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <h3>Approche innovante</h3>
+                    <p>Pédagogie active, projets concrets et méthodes agiles pour un apprentissage efficace et engageant.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h3>Formateurs experts</h3>
+                    <p>Nos formateurs sont des professionnels en activité qui partagent leur expertise terrain et leur réseau.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-briefcase"></i>
+                    </div>
+                    <h3>Accompagnement freelance</h3>
+                    <p>Programme dédié au développement d'activités freelance avec suivi personnalisé et mise en relation.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Page Statistiques -->
+    <section id="stats" class="page">
+        <div class="stats" style="margin-top: 70px;">
+            <div class="section-title">
+                <h2>Notre Impact en Chiffres</h2>
+                <p>Des résultats concrets qui témoignent de notre efficacité</p>
+            </div>
+            
+            <div class="stats-container">
+                <div class="stat-item">
+                    <div class="stat-number" data-target="95">0</div>
+                    <p>Taux d'insertion professionnelle</p>
+                </div>
+                
+                <div class="stat-item">
+                    <div class="stat-number" data-target="1200">0</div>
+                    <p>Apprenants formés depuis 2020</p>
+                </div>
+                
+                <div class="stat-item">
+                    <div class="stat-number" data-target="200">0</div>
+                    <p>Entreprises partenaires</p>
+                </div>
+                
+                <div class="stat-item">
+                    <div class="stat-number" data-target="98">0</div>
+                    <p>Satisfaction des apprenants</p>
+                </div>
+            </div>
+            
+            <!-- Tableau de Statistiques Responsive -->
+            <div class="stats-table-container">
+                <table class="stats-table">
+                    <thead>
+                        <tr>
+                            <th>Indicateur</th>
+                            <th>Valeur</th>
+                            <th>Évolution</th>
+                            <th>Objectif 2024</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Taux d'emploi après formation</td>
+                            <td class="stat-value">95%</td>
+                            <td>+5% vs 2022</td>
+                            <td>97%</td>
+                        </tr>
+                        <tr>
+                            <td>Satisfaction des apprenants</td>
+                            <td class="stat-value">98%</td>
+                            <td>+3% vs 2022</td>
+                            <td>99%</td>
+                        </tr>
+                        <tr>
+                            <td>Formations certifiantes</td>
+                            <td class="stat-value">35</td>
+                            <td>+10 vs 2022</td>
+                            <td>45</td>
+                        </tr>
+                        <tr>
+                            <td>Partenariats entreprises</td>
+                            <td class="stat-value">200+</td>
+                            <td>+50 vs 2022</td>
+                            <td>250</td>
+                        </tr>
+                        <tr>
+                            <td>Taux de réussite aux certifications</td>
+                            <td class="stat-value">92%</td>
+                            <td>+4% vs 2022</td>
+                            <td>95%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Page Départements -->
+    <section id="departements" class="page">
+        <div class="departments" style="margin-top: 70px;">
+            <div class="section-title">
+                <h2>Nos Départements de Formation</h2>
+                <p>Découvrez notre offre de formation complète et spécialisée</p>
+            </div>
+            
+            <div class="tabs">
+                <button class="tab active" data-tab="tech">Technologie & Digital</button>
+                <button class="tab" data-tab="business">Business & Management</button>
+                <button class="tab" data-tab="design">Design & Création</button>
+                <button class="tab" data-tab="data">Data & Intelligence Artificielle</button>
+            </div>
+            
+            <div class="tab-content active" id="tech-content">
+                <div class="department-grid">
+                    <div class="department-card">
+                        <div class="department-img" style="background-image: url('https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80')"></div>
+                        <div class="department-content">
+                            <h3>Développement Web Fullstack</h3>
+                            <ul class="department-list">
+                                <li>HTML5, CSS3, JavaScript avancé</li>
+                                <li>Frameworks React, Angular et Vue.js</li>
+                                <li>Backend avec Node.js, Python et PHP</li>
+                                <li>Bases de données SQL et NoSQL</li>
+                                <li>DevOps et déploiement cloud</li>
+                            </ul>
+                            <button class="btn btn-primary">Voir le programme</button>
+                        </div>
+                    </div>
+                    
+                    <div class="department-card">
+                        <div class="department-img" style="background-image: url('https://images.unsplash.com/photo-1547658719-da2b51169166?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80')"></div>
+                        <div class="department-content">
+                            <h3>Cybersécurité</h3>
+                            <ul class="department-list">
+                                <li>Fondamentaux de la sécurité informatique</li>
+                                <li>Tests d'intrusion et ethical hacking</li>
+                                <li>Sécurité des réseaux et systèmes</li>
+                                <li>Gestion des incidents de sécurité</li>
+                                <li>Conformité RGPD et réglementations</li>
+                            </ul>
+                            <button class="btn btn-primary">Voir le programme</button>
+                        </div>
+                    </div>
+                    
+                    <div class="department-card">
+                        <div class="department-img" style="background-image: url('https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80')"></div>
+                        <div class="department-content">
+                            <h3>Cloud Computing</h3>
+                            <ul class="department-list">
+                                <li>Architectures cloud AWS, Azure et GCP</li>
+                                <li>Conteneurisation avec Docker et Kubernetes</li>
+                                <li>Infrastructure as Code (Terraform)</li>
+                                <li>Migration et optimisation cloud</li>
+                                <li>Sécurité et gouvernance cloud</li>
+                            </ul>
+                            <button class="btn btn-primary">Voir le programme</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tab-content" id="business-content">
+                <div class="department-grid">
+                    <div class="department-card">
+                        <div class="department-img" style="background-image: url('https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80')"></div>
+                        <div class="department-content">
+                            <h3>Management de Projet</h3>
+                            <ul class="department-list">
+                                <li>Méthodologies Agile et Scrum</li>
+                                <li>Gestion des parties prenantes</li>
+                                <li>Planification et suivi de projet</li>
+                                <li>Gestion des risques et qualité</li>
+                                <li>Outils de gestion de projet</li>
+                            </ul>
+                            <button class="btn btn-primary">Voir le programme</button>
+                        </div>
+                    </div>
+                    
+                    <div class="department-card">
+                        <div class="department-img" style="background-image: url('https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80')"></div>
+                        <div class="department-content">
+                            <h3>Marketing Digital</h3>
+                            <ul class="department-list">
+                                <li>Stratégie digitale et brand content</li>
+                                <li>SEO et acquisition de trafic</li>
+                                <li>Publicité en ligne et réseaux sociaux</li>
+                                <li>Email marketing et automation</li>
+                                <li>Analytics et mesure de performance</li>
+                            </ul>
+                            <button class="btn btn-primary">Voir le programme</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Page Galerie -->
+    <section id="galerie" class="page">
+        <div class="gallery" style="margin-top: 70px;">
+            <div class="section-title">
+                <h2>Notre Environnement d'Apprentissage</h2>
+                <p>Découvrez l'ambiance et les espaces de formation The Mindset</p>
+            </div>
+            
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Formation en présentiel" class="gallery-img">
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Travail en équipe" class="gallery-img">
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1511578314322-379afb476865?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Atelier pratique" class="gallery-img">
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1551836026-d5cbc8592821?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Conférence spécialisée" class="gallery-img">
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1559136555-9303baea8ebd?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Espace de coworking" class="gallery-img">
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1556761175-b413da4baf72?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Présentation de projet" class="gallery-img">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Page Contact -->
+    <section id="contact" class="page">
+        <div class="form-section" style="margin-top: 70px;">
+            <div class="section-title">
+                <h2>Demandez des informations</h2>
+                <p>Remplissez ce formulaire et nous vous recontacterons dans les plus brefs délais</p>
+            </div>
+            
+            <div class="form-container">
+                <form id="contactForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="name">Nom complet *</label>
+                            <input type="text" id="name" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">Email *</label>
+                            <input type="email" id="email" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="phone">Téléphone</label>
+                            <input type="tel" id="phone">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="company">Entreprise</label>
+                            <input type="text" id="company">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="formation">Formation intéressée *</label>
+                        <select id="formation" required>
+                            <option value="">Sélectionnez...</option>
+                            <option value="devweb">Développement Web Fullstack</option>
+                            <option value="datascience">Data Science & Analyse</option>
+                            <option value="cybersecurite">Cybersécurité</option>
+                            <option value="cloud">Cloud Computing</option>
+                            <option value="marketing">Marketing Digital</option>
+                            <option value="management">Management de Projet</option>
+                            <option value="autres">Autres</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="message">Votre projet ou questions *</label>
+                        <textarea id="message" placeholder="Décrivez votre projet, vos objectifs ou posez vos questions..." required></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">Envoyer ma demande</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Page de Connexion Admin -->
+    <section id="admin-login" class="page">
+        <div class="login-container">
+            <div class="login-box">
+                <h2>Connexion Administrateur</h2>
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label for="username">Nom d'utilisateur</label>
+                        <input type="text" id="username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Mot de passe</label>
+                        <input type="password" id="password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">Se connecter</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Page Administration -->
+    <section id="admin" class="page">
+        <div class="admin-header">
+            <div class="admin-logo">
+                <h1><i class="fas fa-cog"></i> Administration The Mindset</h1>
+            </div>
+            <nav class="admin-nav">
+                <a class="active"><i class="fas fa-tachometer-alt"></i> Tableau de bord</a>
+                <a onclick="showPage('accueil')"><i class="fas fa-globe"></i> Voir le site</a>
+                <a onclick="logout()"><i class="fas fa-sign-out-alt"></i> Déconnexion</a>
+            </nav>
+        </div>
+
+        <div class="admin-container">
+            <aside class="admin-sidebar">
+                <ul class="sidebar-menu">
+                    <li><a class="active"><i class="fas fa-tachometer-alt"></i> Tableau de bord</a></li>
+                    <li><a><i class="fas fa-graduation-cap"></i> Formations</a></li>
+                    <li><a><i class="fas fa-users"></i> Inscriptions</a></li>
+                    <li><a><i class="fas fa-envelope"></i> Messages</a></li>
+                    <li><a><i class="fas fa-comments"></i> Témoignages</a></li>
+                    <li><a><i class="fas fa-chart-bar"></i> Statistiques</a></li>
+                    <li><a><i class="fas fa-cogs"></i> Paramètres</a></li>
+                </ul>
+            </aside>
+
+            <main class="admin-main">
+                <section id="dashboard-admin">
+                    <h2>Tableau de bord</h2>
+                    <div class="dashboard-cards">
+                        <div class="card">
+                            <h3>Inscriptions aujourd'hui</h3>
+                            <div class="card-number">12</div>
+                            <p>+2 depuis hier</p>
+                        </div>
+                        <div class="card">
+                            <h3>Total formations</h3>
+                            <div class="card-number">8</div>
+                            <p>Actives</p>
+                        </div>
+                        <div class="card">
+                            <h3>Messages non lus</h3>
+                            <div class="card-number">5</div>
+                            <p>En attente</p>
+                        </div>
+                        <div class="card">
+                            <h3>Taux de conversion</h3>
+                            <div class="card-number">24%</div>
+                            <p>Ce mois-ci</p>
+                        </div>
+                    </div>
+
+                    <!-- Dernières inscriptions -->
+                    <div class="table-container">
+                        <h3 style="padding: 1rem; margin: 0;">Dernières inscriptions</h3>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Nom</th>
+                                    <th>Email</th>
+                                    <th>Formation</th>
+                                    <th>Date</th>
+                                    <th>Statut</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Marie Dupont</td>
+                                    <td>marie.dupont@email.com</td>
+                                    <td>Développement Web</td>
+                                    <td>2023-11-15</td>
+                                    <td><span style="color: var(--success);">Confirmée</span></td>
+                                    <td>
+                                        <button class="btn btn-primary btn-sm">Voir</button>
+                                        <button class="btn btn-warning btn-sm">Modifier</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Jean Martin</td>
+                                    <td>jean.martin@email.com</td>
+                                    <td>Data Science</td>
+                                    <td>2023-11-14</td>
+                                    <td><span style="color: var(--warning);">En attente</span></td>
+                                    <td>
+                                        <button class="btn btn-primary btn-sm">Voir</button>
+                                        <button class="btn btn-warning btn-sm">Modifier</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Messages récents -->
+                    <div class="table-container">
+                        <h3 style="padding: 1rem; margin: 0;">Messages récents</h3>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Expéditeur</th>
+                                    <th>Sujet</th>
+                                    <th>Date</th>
+                                    <th>Statut</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Thomas Bernard</td>
+                                    <td>Demande d'information formation DevOps</td>
+                                    <td>2023-11-15</td>
+                                    <td><span style="color: var(--accent);">Non lu</span></td>
+                                    <td>
+                                        <button class="btn btn-primary btn-sm">Lire</button>
+                                        <button class="btn btn-danger btn-sm">Supprimer</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </section>
+
+    <script>
+        // Navigation entre les pages
+        function showPage(pageId) {
+            // Masquer toutes les pages
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            // Afficher la page sélectionnée
+            document.getElementById(pageId).classList.add('active');
+            
+            // Mettre à jour la navigation
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            
+            // Scroll vers le haut
+            window.scrollTo(0, 0);
+            
+            // Mettre à jour l'état du menu mobile
+            if (window.innerWidth <= 768) {
+                document.querySelector('.main-nav').classList.remove('active');
+            }
+        }
+
+        // Menu hamburger
+        const hamburger = document.querySelector('.hamburger');
+        const navMenu = document.querySelector('.main-nav');
+        const header = document.getElementById('header');
+
+        hamburger.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('header-scrolled');
+            } else {
+                header.classList.remove('header-scrolled');
+            }
+        });
+
+        // Gestion du formulaire de contact
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Merci pour votre demande ! Nous vous recontacterons très rapidement.');
+            this.reset();
+        });
+
+        // Gestion du formulaire de connexion admin
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            // Simulation de connexion (à remplacer par une vraie authentification)
+            if (username === 'admin' && password === 'admin') {
+                showPage('admin');
+            } else {
+                alert('Identifiants incorrects. Utilisez admin/admin pour tester.');
+            }
+        });
+
+        // Déconnexion admin
+        function logout() {
+            showPage('accueil');
+            document.getElementById('loginForm').reset();
+        }
+
+        // Téléchargement flyer (simulation)
+        function downloadFlyer() {
+            alert('Téléchargement du flyer en cours...');
+            // Ici, vous ajouteriez le lien de téléchargement réel
+        }
+
+        // Système d'onglets pour les départements
+        const tabs = document.querySelectorAll('.tab');
+        const tabContents = document.querySelectorAll('.tab-content');
+        
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const tabId = tab.getAttribute('data-tab');
+                
+                // Retirer la classe active de tous les onglets et contenus
+                tabs.forEach(t => t.classList.remove('active'));
+                tabContents.forEach(content => content.classList.remove('active'));
+                
+                // Ajouter la classe active à l'onglet et au contenu correspondant
+                tab.classList.add('active');
+                document.getElementById(`${tabId}-content`).classList.add('active');
+            });
+        });
+
+        // Diaporama
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        
+        function showSlide(index) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            slides[index].classList.add('active');
+        }
+        
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % slides.length;
+            showSlide(currentSlide);
+        }
+        
+        // Changer de slide toutes les 5 secondes
+        setInterval(nextSlide, 5000);
+
+        // Animation des statistiques
+        const statNumbers = document.querySelectorAll('.stat-number');
+        let animated = false;
+
+        function animateStats() {
+            if (animated) return;
+            
+            statNumbers.forEach(stat => {
+                const target = parseInt(stat.getAttribute('data-target'));
+                const duration = 2000;
+                const step = target / (duration / 16);
+                let current = 0;
+                
+                const timer = setInterval(() => {
+                    current += step;
+                    if (current >= target) {
+                        current = target;
+                        clearInterval(timer);
+                    }
+                    stat.textContent = Math.floor(current) + (stat.getAttribute('data-target') === '98' ? '%' : '');
+                }, 16);
+            });
+            
+            animated = true;
+        }
+
+        // Observer pour l'animation des statistiques
+        const statsSection = document.querySelector('.stats');
+        if (statsSection) {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        animateStats();
+                    }
+                });
+            }, { threshold: 0.5 });
+
+            observer.observe(statsSection);
+        }
+
+        // Fermer le menu mobile en cliquant sur un lien
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth <= 768) {
+                    navMenu.classList.remove('active');
+                }
+            });
+        });
+
+        // Par défaut, afficher la page d'accueil
+        showPage('accueil');
+    </script>
+</body>
+</html>
